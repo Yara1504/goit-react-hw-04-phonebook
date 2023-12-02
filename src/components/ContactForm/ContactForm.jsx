@@ -1,0 +1,52 @@
+import React, { useState } from 'react';
+import css from './ContactForm.module.css';
+
+const ContactForm = ({ onSubmit }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    number: '',
+  });
+
+  const inputChange = event => {
+    const { name, value } = event.currentTarget;
+    setFormData(prevForm => ({ ...prevForm, [name]: value }));
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    onSubmit(formData);
+    reset();
+  };
+
+  const reset = () => {
+    setFormData({ name: '', number: '' });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className={css.form}>
+      <label className={css.name}>Name</label>
+      <input
+        className={css.input}
+        onChange={inputChange}
+        type="text"
+        name="name"
+        value={formData.name}
+      />
+
+      <label className={css.name}>Number</label>
+      <input
+        className={css.input}
+        onChange={inputChange}
+        type="tel"
+        name="number"
+        value={formData.number}
+      />
+
+      <button type="submit" className={css.button}>
+        Add contact
+      </button>
+    </form>
+  );
+};
+
+export default ContactForm;
